@@ -1,3 +1,4 @@
+use core::panic;
 use std::fs;
 
 pub struct Dial {
@@ -79,6 +80,37 @@ impl Dial {
         if self.current_value == 0 {self.zeroes_so_far += 1;}
     }
 
+    pub fn left_stupid(&mut self, turn_by: isize) {
+        for _i in 0..turn_by {
+            self.decrement();
+        }
+    }
+
+    pub fn right_stupid(&mut self, turn_by: isize) {
+        for _i in 0..turn_by {
+            self.increment();
+        }
+    }
+
+    fn increment(&mut self) {
+        self.current_value = match self.current_value {
+            (0..99) => self.current_value + 1,
+            99 => {
+                self.zeroes_so_far += 1;
+                0
+            }
+            _ => panic!("Invalid dial parametre!")
+        };
+    }
+    fn decrement(&mut self) {
+        self.current_value = match self.current_value {
+            (1..100) => self.current_value - 1,
+            0 => 99,
+            _ => panic!("Invalid dial parametre!")
+        };
+        if self.current_value == 0 {self.zeroes_so_far += 1;}
+    }
+
     pub fn get_pwd(&self) -> usize {
         self.zeroes_so_far
     }
@@ -88,6 +120,7 @@ fn main() {
 
     let mut dial = Dial::new();
     let mut dial_2 = Dial::new();
+    let mut dial_3 = Dial::new();
 
     let instructions = fs::read_to_string(String::from("./instructions.txt")).expect("Could not read file. Make sure there exists an instruc");
     for instruction in instructions.split_whitespace() {
@@ -95,10 +128,12 @@ fn main() {
             'L' | 'l' => {
                 dial.left(instruction[1..].parse().expect("Could not parse usize"));
                 dial_2.left_alt(instruction[1..].parse().expect("Could not parse usize"));
+                dial_3.left_stupid(instruction[1..].parse().expect("Could not parse usize"));
             }
             'R' | 'r' => {
                 dial.right(instruction[1..].parse().expect("Could not parse usize"));
-                dial_2.right(instruction[1..].parse().expect("Could not parse usize"));
+                dial_2.right_alt(instruction[1..].parse().expect("Could not parse usize"));
+                dial_3.right_stupid(instruction[1..].parse().expect("Could not parse usize"));
             }
             _ => panic!("Could not parse instruction.")
         }
@@ -106,6 +141,8 @@ fn main() {
 
     let pwd = dial.get_pwd();
     let pwd_alt = dial_2.get_pwd();
+    let pwd_stupid = dial_3.get_pwd();
     println!("The Password is: {pwd}");
     println!("The other paassword is: {pwd_alt}");
+    println!("The password solved the stupid way is: {pwd_stupid}");
 }
