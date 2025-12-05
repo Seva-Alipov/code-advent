@@ -10,7 +10,7 @@ impl Dial {
     pub fn new() -> Self{
         Dial{zeroes_so_far: 0, current_value: 50}
     }
-    pub fn left(&mut self, turn_by: isize) {
+    pub fn left(&mut self, turn_by: isize) { //PART 1
         self.current_value -= turn_by;
 
         if self.current_value == 0 {
@@ -25,7 +25,7 @@ impl Dial {
 
         if self.current_value == 0 {self.zeroes_so_far += 1;}
     }
-    pub fn right(&mut self, turn_by: isize) {
+    pub fn right(&mut self, turn_by: isize) { //PART 1
         self.current_value += turn_by;
 
         if self.current_value == 0 {
@@ -41,7 +41,7 @@ impl Dial {
         if self.current_value == 0 {self.zeroes_so_far += 1;}
     }
 
-    pub fn left_alt(&mut self, turn_by: isize) {
+    pub fn left_alt(&mut self, turn_by: isize) { //PART 2 INCORRECT ATTEMPT
         self.current_value -= turn_by;
 
         if self.current_value == 0 {
@@ -60,7 +60,7 @@ impl Dial {
 
         if self.current_value == 0 {self.zeroes_so_far += 1;}
     }
-    pub fn right_alt(&mut self, turn_by: isize) {
+    pub fn right_alt(&mut self, turn_by: isize) { // PART 2 INCORRECT ATTEMPT
         self.current_value += turn_by;
 
         if self.current_value == 0 {
@@ -80,13 +80,13 @@ impl Dial {
         if self.current_value == 0 {self.zeroes_so_far += 1;}
     }
 
-    pub fn left_stupid(&mut self, turn_by: isize) {
+    pub fn left_stupid(&mut self, turn_by: isize) { //PART 2
         for _i in 0..turn_by {
             self.decrement();
         }
     }
 
-    pub fn right_stupid(&mut self, turn_by: isize) {
+    pub fn right_stupid(&mut self, turn_by: isize) { //PART 2
         for _i in 0..turn_by {
             self.increment();
         }
