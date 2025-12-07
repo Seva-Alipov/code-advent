@@ -17,7 +17,7 @@ fn add_two_largest_digits(bank: &str) -> String { //PART 1
     format!("{}{}", left, right)
 }
 
-fn add_twelve_largest_digits(bank: &str) -> String {
+fn add_twelve_largest_digits(bank: &str) -> String { //PART 2
     let batteries: Vec<char> = bank.chars().collect();
     let mut remaining = batteries.len();
     let mut out: Vec<char> = Vec::new();
